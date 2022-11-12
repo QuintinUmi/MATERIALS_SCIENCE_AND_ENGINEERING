@@ -4,33 +4,33 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-import read_report_file as lr
-import curve_analyze as lc
+import lab_report_tool_package.read_report_file as lr
+import lab_report_tool_package.curve_analyze as lc
 
 x_min = -0.05
 x_max = 25.
 y_min = 0.
-y_max = 700.
+y_max = 500.
 
 
-dataLine = lr.read_file_split_data("C:\\Users\\qqj03\\Desktop\\G08_Steel.txt")
+dataLine = lr.read_file_split_data("C:\\Users\\qqj03\\Desktop\\Lab Result\\G04_Steel.txt")
 # print(data)
 
 stress = np.array(lr.get_colume_data(dataLine, 4))
 strain = np.array(lr.get_colume_data(dataLine, 5))
 
-slope, intercept, r_value, p_value, dataIndex = lc.linear_analyze(strain, stress, 0,  150)
+slope, intercept, r_value, p_value, dataIndex = lc.linear_analyze(strain, stress, 0,  500)
 
-x = np.arange(0.2, x_max, 0.0001)
-x_crsp, y_crsp = lc.cross_point_sync_x(strain, slope * (strain - 0.2) + intercept, stress, 50)
+# x = np.arange(0.2, x_max, 0.0001)
+x_crsp, y_crsp = lc.cross_point_sync_x(strain, slope * (strain - 0.2) + intercept, stress, 10)
 
 x_tensile, y_tensile = lc.tensile_point(strain, stress)
 
 x_fracture, y_fracture = lc.fracture_point(strain, stress, x_tensile)
 
-degree = 100
+degree = 50
 sIndex = lc.findIndex(strain, x_fracture)
-coeff = lc.curve_fit_coeff(strain, stress, dataIndex + 150, sIndex, degree)
+coeff = lc.curve_fit_coeff(strain, stress, dataIndex, sIndex, degree)
 
 x_linear = np.arange(-1.0, x_max, 0.25)
 y_linear = slope * x_linear + intercept
