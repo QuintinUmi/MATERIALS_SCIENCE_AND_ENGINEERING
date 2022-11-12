@@ -20,14 +20,14 @@ def read_file_split_data(filePath):
 
     f = open(filePath, "r")
 
-    data = []
+    dataLine = []
     while(True):
 
-        dataLine = f.readline()
-        if(dataLine == ""):
+        dataStr = f.readline()
+        if(dataStr == ""):
             break
 
-        dataSplit = dataLine.split()
+        dataSplit = dataStr.split()
         # dataSplit = dataSplit[0: len(dataSplit) - 1]
         isdata = True
         # print(dataSplit)
@@ -37,13 +37,22 @@ def read_file_split_data(filePath):
         for dataCheck in dataSplit:
             if(not is_number(dataCheck)):
                 isdata = False
+            else:
+                dataSplit[dataSplit.index(dataCheck)] = float(dataCheck)
 
         if(isdata):
-            data.append(dataSplit)
+            dataLine.append(dataSplit)
             # print("digit: ", dataSplit)
 
-    return data
+    return dataLine
 
+def get_colume_data(dataLine, colume):
+
+    dataColume = []
+    for datum in dataLine:
+        dataColume.append(datum[colume])
+
+    return dataColume
 
 #---------------------------------------------------
 # -*- coding: UTF-8 -*-
@@ -68,6 +77,6 @@ def is_number(s):
 #---------------------------------------------------
 
 
-if not __name__ == "__main__":
+if __name__ == "__main__":
     data = read_file_split_data("C:\\Users\\qqj03\\Desktop\\Lab Result\\G04_Acrylic.txt")
     print(data)
