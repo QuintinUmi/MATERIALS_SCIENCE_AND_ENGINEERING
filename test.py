@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from tkinter import messagebox
 import math
+import os
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #A. Set an appropriate range for x and y -axis  
@@ -199,7 +200,9 @@ def main():
 
     Show_Result()
 
-    print("Finished!")
+    print("Finished!\n")
+    os.system("PAUSE")
+
 
 if __name__ == '__main__':
     main()
