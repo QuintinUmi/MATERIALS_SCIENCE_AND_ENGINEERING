@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.stats as st
+from scipy import integrate
 
 
 def linear_analyze(strain, stress, startIndex, ommitValue):
@@ -14,6 +15,52 @@ def linear_analyze(strain, stress, startIndex, ommitValue):
             slope, intercept, r_value, p_value = slope_t, intercept_t, r_value_t, p_value_t
 
     return slope, intercept, r_value, p_value, dataIndex
+
+
+def elastic_to_plastic(strain, stress, eLine, ommitValue, check_coeff = 0.02):
+    
+    c_strain = strain[0]
+    c_stress = stress[0]
+    for i in range(0, len(strain)):
+        if(not -check_coeff*stress[i] < stress[i] - eLine[i] < check_coeff*stress[i] and i > ommitValue):
+            break
+        else:
+            c_strain = strain[i]
+            c_stress = stress[i]
+    return c_strain, c_stress
+
+def non_steel_yield(x, func1, func2, precision = 0.01):
+
+    crossp_x = []
+    crossp_y = []
+
+    for i in range(0, min(len(func1), len(func2))):
+        if(-precision < func1[i] - func2[i] < precision):
+            # print(func1[i] - func2[i])
+            crossp_x.append(x[i])
+            crossp_y.append((func1[i] + func2[i]) / 2)
+
+    xSum = 0
+    ySum = 0
+    for i in range(0, len(crossp_x)):
+        xSum += crossp_x[i]
+        ySum += crossp_y[i]
+
+    crossp_aver_x = xSum / len(crossp_x)
+    crossp_aver_y = ySum / len(crossp_y)
+    return crossp_aver_x, crossp_aver_y
+
+def steel_yield(strain, stress, xelaslim_p, xtensile_p):
+    leftIndex = findIndex(strain, xelaslim_p)
+    rightIndex = findIndex(strain, xtensile_p)
+    yield_strain = 65536*65536
+    yield_stress = 65536*65536
+    for i in range(leftIndex, rightIndex):
+        if(stress[i] < yield_stress and strain[i] > xelaslim_p):
+            yield_strain = strain[i]
+            yield_stress = stress[i]
+    return yield_strain, yield_stress
+    
 
 
 def curve_fit_coeff(strain, stress, startIndex, endIndex, degree):
@@ -42,7 +89,7 @@ def tensile_point(strain, stress):
     return t_strain, t_stress
 
 def fracture_point(strain, stress, tensile_strain, check_coeff = 0.05):
-    
+
     sIndex = findIndex(strain, tensile_strain)
 
     for i in range(sIndex, len(strain)):
@@ -55,40 +102,26 @@ def fracture_point(strain, stress, tensile_strain, check_coeff = 0.05):
             stressSum += stress[i - j]
         aver = stressSum / int(len(strain) * check_coeff - 1)
         slope_t, intercept_t, r_value_t, p_value_t, std_err = st.linregress(check_strain, check_stress)
-        if(aver - stress[i] > aver * (check_coeff*3.5)):
+        if(aver - stress[i] > std_err + aver * (check_coeff*3.5)):
             f_strain = strain[i - 1]
             f_stress = stress[i - 1]
             break
     return f_strain, f_stress
 
+def modulus(strain, stress, end_p):
+    endIndex = findIndex(strain, end_p)
+    res_mod = integrate.trapz(stress[0: endIndex], strain[0: endIndex])
+    return res_mod
+
+
 def findIndex(strain, tarStrain):
     sIndex = 0
-    while(strain[sIndex] < tarStrain):
+    while(sIndex < len(strain) and strain[sIndex] < tarStrain):
         sIndex += 1
     return sIndex
 
 
 
-def cross_point_sync_x(x, func1, func2, precision = 0.01):
-
-    crossp_x = []
-    crossp_y = []
-
-    for i in range(0, min(len(func1), len(func2))):
-        if(-precision < func1[i] - func2[i] < precision):
-            # print(func1[i] - func2[i])
-            crossp_x.append(x[i])
-            crossp_y.append((func1[i] + func2[i]) / 2)
-
-    xSum = 0
-    ySum = 0
-    for i in range(0, len(crossp_x)):
-        xSum += crossp_x[i]
-        ySum += crossp_y[i]
-
-    crossp_aver_x = xSum / len(crossp_x)
-    crossp_aver_y = ySum / len(crossp_y)
-    return crossp_aver_x, crossp_aver_y
 
 
 if __name__ == '__main__':
