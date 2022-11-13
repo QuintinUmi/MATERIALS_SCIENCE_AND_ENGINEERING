@@ -187,12 +187,13 @@ cur_expr = "Curve Expression (Coefficient will save in cur_coeff.txt in your dat
                 coeff
             )
 
-coeff_str = "Young's modulus: {}\n\
+coeff_str = "\
+Young's modulus: {}\n\
 intercept: {}\n\
 n = {}\n\
 a = {}".format(young_mod, intercept, degree, coeff)
 f = open("C:\\Users\\qqj03\\Desktop\\Lab Result\\G04_Acrylic_cur_coeff.txt", 'w')
-f.write(coeff_str)
+f.write(opStr + '\n\n' + coeff_str)
 f.close()
 
 plt.text((x_min + x_max) / 2.2, (y_min + y_max) / 2.5, opStr, size=10,
