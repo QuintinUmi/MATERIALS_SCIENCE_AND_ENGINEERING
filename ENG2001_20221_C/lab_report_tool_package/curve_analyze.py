@@ -108,15 +108,15 @@ def fracture_point(strain, stress, tensile_strain, check_coeff = 0.05):
             break
     return f_strain, f_stress
 
-def resilience_modulus(strain, stress, xfracture):
-    endIndex = findIndex(strain, xfracture)
+def modulus(strain, stress, end_p):
+    endIndex = findIndex(strain, end_p)
     res_mod = integrate.trapz(stress[0: endIndex], strain[0: endIndex])
     return res_mod
 
 
 def findIndex(strain, tarStrain):
     sIndex = 0
-    while(strain[sIndex] < tarStrain):
+    while(sIndex < len(strain) and strain[sIndex] < tarStrain):
         sIndex += 1
     return sIndex
 
