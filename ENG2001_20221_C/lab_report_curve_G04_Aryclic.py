@@ -7,20 +7,25 @@ import matplotlib.ticker as ticker
 import lab_report_tool_package.read_report_file as lr
 import lab_report_tool_package.curve_analyze as lc
 
-x_min = -0.05
+#Please adjust your parameters according to the following instructions
+
+x_min = -0.05   # Set the data graph display size
 x_max = 5.
 y_min = 0.
 y_max = 75.
-isSteel = False
+isSteel = False #Whether it is metal
 
+#Set the source data path
 dataLine = lr.read_file_split_data("C:\\Users\\qqj03\\Desktop\\Lab Result\\G04_Acrylic.txt")
 # print(data)
 
 stress = np.array(lr.get_colume_data(dataLine, 4))
 strain = np.array(lr.get_colume_data(dataLine, 5))
 
-young_mod, intercept, r_value, p_value, dataIndex = lc.linear_analyze(strain, stress, 0,  100)
+#The last parameter is the amount of data pre-fitted for the calculation of the line fit (to be adjusted manually)
+young_mod, intercept, r_value, p_value, dataIndex = lc.linear_analyze(strain, stress, 0,  100)  
 
+#The last parameter is the amount of data pre-fitted for the calculation of the line fit (to be adjusted manually)
 x_elaslim, y_elaslim = lc.elastic_to_plastic(strain, stress, young_mod * strain + intercept, 100)
 
 x_tensile, y_tensile = lc.tensile_point(strain, stress)
@@ -28,6 +33,7 @@ x_tensile, y_tensile = lc.tensile_point(strain, stress)
 if(isSteel):
     x_yield, y_yield = lc.steel_yield(strain, stress, x_elaslim, x_tensile)
 else:
+                        #If you get a (division by zero) error, try turning the last parameter up a bit
     x_yield, y_yield = lc.non_steel_yield(strain, young_mod * (strain - 0.2) + intercept, stress, 0.01)
 
 x_fracture, y_fracture = lc.fracture_point(strain, stress, x_tensile)
@@ -39,13 +45,16 @@ degree = 10
 sIndex = lc.findIndex(strain, x_fracture)
 coeff = lc.curve_fit_coeff(strain, stress, dataIndex, sIndex, degree)
 
+#=================================================================================================================
+# Above are all the calculation, following are just for drawing picture
+#=================================================================================================================
+
 x_linear = np.arange(0., x_max, 0.001)
 y_linear = young_mod * x_linear + intercept
 x_offset = x_linear
 y_offset = young_mod * (x_linear - 0.2) + intercept
 x_curve = np.arange(strain[lc.findIndex(strain, x_elaslim)], x_fracture, 0.001)
 y_curve = lc.curve_fit_generate(x_curve, coeff)
-
 
 
 
@@ -63,23 +72,9 @@ plt.style.use('seaborn')
 
 plt.grid(True)
 
-
 y_min = stress[0]
 
-
 plt.axis([x_min, x_max, y_min, y_max])
-
-# xtick_spacing = 100
-# ytick_spacing = 100
-# #通过修改tick_spacing的值可以修改x轴的密度
-# #1的时候1到16，5的时候只显示几个
-# fig, cur = plt.subplots(1,1)
-# cur.plot(strain, stress)
-# cur.xaxis.set_major_locator(ticker.MultipleLocator(xtick_spacing))
-# cur.yaxis.set_major_locator(ticker.MultipleLocator(ytick_spacing))
-# plt.xlabel("Strain")
-# plt.ylabel("Stress")
-# cur.grid()
 
 
 plt.plot(strain, stress, label="Experimental data")

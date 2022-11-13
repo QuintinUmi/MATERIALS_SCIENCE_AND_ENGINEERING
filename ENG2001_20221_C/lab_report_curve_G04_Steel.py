@@ -7,13 +7,13 @@ import matplotlib.ticker as ticker
 import lab_report_tool_package.read_report_file as lr
 import lab_report_tool_package.curve_analyze as lc
 
-x_min = -0.05
+x_min = -0.05   # Set the data graph display size
 x_max = 25.
 y_min = 0.
 y_max = 500.
-isSteel = True
+isSteel = True  #Whether it is metal
 
-
+#Set the source data path
 dataLine = lr.read_file_split_data("C:\\Users\\qqj03\\Desktop\\Lab Result\\G04_Steel.txt")
 # print(data)
 
@@ -39,6 +39,10 @@ t_mod = lc.modulus(strain, stress, x_fracture)
 degree = 50
 sIndex = lc.findIndex(strain, x_fracture)
 coeff = lc.curve_fit_coeff(strain, stress, dataIndex, sIndex, degree)
+
+#=================================================================================================================
+# Above are all the calculation, following are just for drawing picture
+#=================================================================================================================
 
 x_linear = np.arange(-1.0, x_max, 0.001)
 y_linear = young_mod * x_linear + intercept
