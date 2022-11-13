@@ -1,11 +1,10 @@
-###############################################################################
-# Author QIN Qijun
-# Workshop: https://github.com/QuintinUmi/MATERIALS_SCIENCE_AND_ENGINEERING/tree/main/ENG2001_20221_C
-# For learning and communication purposes only
-#
-# This file is used to intercept all data in the report
-#
-# #############################################################################
+##########################################################################################################
+# Copyright: QIN Qijun
+# 
+# This document is the property of Qin Qijun, please cite the source if you need to quote it.
+# Workshop: https://github.com/QuintinUmi
+# Contact:  qqj030212@gmail.com
+##########################################################################################################
 
 import os
 import sys
@@ -35,7 +34,7 @@ def read_file_split_data(filePath):
         if(len(dataSplit) == 0):
             isdata = False
         for dataCheck in dataSplit:
-            if(not is_number(dataCheck)):
+            if(not isnumber(dataCheck)):
                 isdata = False
             else:
                 dataSplit[dataSplit.index(dataCheck)] = float(dataCheck)
@@ -54,12 +53,7 @@ def get_colume_data(dataLine, colume):
 
     return dataColume
 
-#---------------------------------------------------
-# -*- coding: UTF-8 -*-
-# Filename : test.py
-# author by : www.runoob.com
-#
-def is_number(s):
+def isnumber(s):
     try:
         float(s)
         return True
@@ -74,7 +68,6 @@ def is_number(s):
         pass
  
     return False
-#---------------------------------------------------
 
 
 if __name__ == "__main__":

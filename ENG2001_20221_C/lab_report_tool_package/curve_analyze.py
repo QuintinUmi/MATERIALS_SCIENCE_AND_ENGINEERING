@@ -1,3 +1,12 @@
+##########################################################################################################
+# Copyright: QIN Qijun
+# 
+# This document is the property of Qin Qijun, please cite the source if you need to quote it.
+# Workshop: https://github.com/QuintinUmi
+# Contact:  qqj030212@gmail.com
+##########################################################################################################
+
+
 import numpy as np
 import scipy.stats as st
 from scipy import integrate
