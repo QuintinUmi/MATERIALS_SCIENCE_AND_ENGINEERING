@@ -32,7 +32,7 @@ else:
 
 x_fracture, y_fracture = lc.fracture_point(strain, stress, x_tensile)
 
-r_mod = lc.modulus(strain, stress, y_elaslim)
+r_mod = lc.modulus(strain, stress, x_elaslim)
 t_mod = lc.modulus(strain, stress, x_fracture)
 
 degree = 10
