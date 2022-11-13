@@ -33,7 +33,7 @@ else:
 
 x_fracture, y_fracture = lc.fracture_point(strain, stress, x_tensile)
 
-r_mod = lc.modulus(strain, stress, y_elaslim)
+r_mod = lc.modulus(strain, stress, x_elaslim)
 t_mod = lc.modulus(strain, stress, x_fracture)
 
 degree = 50
@@ -111,7 +111,7 @@ plt.yticks(np.arange(y_min, y_max, y_max / 25))
 #----------------------------------------------------------------------------------------------------
 
 plt.figure(figsize=(12, 5.625))
-plt.title("{} Report Summery".format("G04_Aryclic"))
+plt.title("{} Report Summery".format("G04_Steel"))
 plt.xlabel("Strain(%)")
 plt.ylabel("Stress(MPa)")
 plt.style.use('seaborn')
