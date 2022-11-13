@@ -1,4 +1,10 @@
-
+##########################################################################################################
+# Copyright: QIN Qijun
+# 
+# This document is the property of Qin Qijun, please cite the source if you need to quote it.
+# Workshop: https://github.com/QuintinUmi
+# Contact:  qqj030212@gmail.com
+##########################################################################################################
 
 import os
 import numpy as np
