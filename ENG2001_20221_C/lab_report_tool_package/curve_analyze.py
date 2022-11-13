@@ -26,7 +26,7 @@ def linear_analyze(strain, stress, startIndex, ommitValue):
     return slope, intercept, r_value, p_value, dataIndex
 
 
-def elastic_to_plastic(strain, stress, eLine, ommitValue, check_coeff = 0.02):
+def elastic_limit(strain, stress, eLine, ommitValue, check_coeff = 0.02):
     
     c_strain = strain[0]
     c_stress = stress[0]
