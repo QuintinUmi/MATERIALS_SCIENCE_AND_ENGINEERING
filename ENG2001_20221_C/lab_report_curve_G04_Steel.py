@@ -28,7 +28,7 @@ strain = np.array(lr.get_colume_data(dataLine, 5))
 
 young_mod, intercept, r_value, p_value, dataIndex = lc.linear_analyze(strain, stress, 0,  400)
 
-x_elaslim, y_elaslim = lc.elastic_to_plastic(strain, stress, young_mod * strain + intercept, 400)
+x_elaslim, y_elaslim = lc.elastic_limit(strain, stress, young_mod * strain + intercept, 400)
 
 x_tensile, y_tensile = lc.tensile_point(strain, stress)
 
@@ -91,9 +91,9 @@ plt.fill_between(x_linear[lc.findIndex(y_linear, 0): lc.findIndex(x_linear, x_el
                 y_linear[lc.findIndex(y_linear, 0): lc.findIndex(x_linear, x_elaslim)], color="orange", alpha = 0.5)
 plt.fill_between(strain[0: lc.findIndex(strain, x_fracture)], 0, 
                 stress[0: lc.findIndex(strain, x_fracture)], color="gray", alpha = 0.5)
-plt.text(x_yield , (y_min + y_max) / 4, "Resilience of Modulus\n\nE = {}".format(r_mod), size=10,
+plt.text(x_yield , (y_min + y_max) / 4, "Resilience of Modulus\n\nUr = {}".format(r_mod), size=10,
             bbox=dict(boxstyle='round', facecolor='#A9D7E7', alpha=0.7))
-plt.text((x_min + x_max) / 2.2, (y_min + y_max) / 2, "Toughness of Modulus\n\nE = {}".format(t_mod), size=10,
+plt.text((x_min + x_max) / 2.2, (y_min + y_max) / 2, "Toughness of Modulus\n\nUt = {}".format(t_mod), size=10,
             bbox=dict(boxstyle='round', facecolor='#A9D7E7', alpha=0.7))
 
 plt.legend(loc='lower right', prop=None, fontsize = 12, frameon=True)
@@ -131,7 +131,7 @@ plt.axis([x_min, x_max, y_min, y_max])
 
 plt.plot(x_linear, y_linear, c='b', linestyle='--', label="Linear Elastic")
 if(not isSteel):
-    plt.plot(x_offset, y_offset, c='g', linestyle='--', label="0.2% Proof Strength")
+    plt.plot(x_offset, y_offset, c='g', linestyle='--', label="0.2% Proof Yield Strength")
 plt.plot(x_curve, y_curve, c='orange', linestyle='--', label="Fit curve")
 plt.legend(loc='lower right', prop=None, fontsize = 12, frameon=True)
 
