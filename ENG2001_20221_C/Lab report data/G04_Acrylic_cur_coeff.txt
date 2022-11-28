@@ -4,9 +4,9 @@ Yield Point:      1.12              52.0539929277425
 Tensile Point    3.0764          68.6263
 Fracture Point: 4.4304          66.5281
 
-Young's Modulus:               56.160894143601844
-Resilience Modulus:           7.909601380000001 (PSI)
-Toughness Modulus:          250.4405327 (PSI)
+Young's Modulus:               56.160894143601844 (MPa)
+Resilience Modulus:           7.909601380000001 (MPa)
+Toughness Modulus:          250.4405327 (MPa)
 
 Young's modulus: 56.160894143601844
 intercept: 0.38146324337129656

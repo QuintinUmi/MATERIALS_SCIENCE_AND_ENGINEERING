@@ -91,9 +91,9 @@ plt.fill_between(x_linear[lc.findIndex(y_linear, 0): lc.findIndex(x_linear, x_el
                 y_linear[lc.findIndex(y_linear, 0): lc.findIndex(x_linear, x_elaslim)], color="orange", alpha = 0.5)
 plt.fill_between(strain[0: lc.findIndex(strain, x_fracture)], 0, 
                 stress[0: lc.findIndex(strain, x_fracture)], color="gray", alpha = 0.5)
-plt.text(x_yield , (y_min + y_max) / 4, "Resilience of Modulus\n\nUr = {}".format(r_mod), size=10,
+plt.text(x_yield , (y_min + y_max) / 4, "Resilience of Modulus\n\nUr = {} (MPa)".format(r_mod), size=10,
             bbox=dict(boxstyle='round', facecolor='#A9D7E7', alpha=0.7))
-plt.text((x_min + x_max) / 2.2, (y_min + y_max) / 2, "Toughness of Modulus\n\nUt = {}".format(t_mod), size=10,
+plt.text((x_min + x_max) / 2.2, (y_min + y_max) / 2, "Toughness of Modulus\n\nUt = {} (MPa)".format(t_mod), size=10,
             bbox=dict(boxstyle='round', facecolor='#A9D7E7', alpha=0.7))
 
 plt.legend(loc='lower right', prop=None, fontsize = 12, frameon=True)
@@ -158,9 +158,9 @@ Yield Point:      {}              {}\n\
 Tensile Point    {}          {}\n\
 Fracture Point: {}          {}\n\
 \n\
-Young's Modulus:               {}\n\
-Resilience Modulus:           {} (PSI)\n\
-Toughness Modulus:          {} (PSI)".format(
+Young's Modulus:               {} (MPa)\n\
+Resilience Modulus:           {} (MPa)\n\
+Toughness Modulus:          {} (MPa)".format(
             x_elaslim, y_elaslim,
             x_yield, y_yield,
             x_tensile, y_tensile,
